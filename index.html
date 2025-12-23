@@ -17,11 +17,14 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             margin: 0;
             background-color: #020617;
-            overflow: hidden;
+            /* Permitir scroll vertical solo si es necesario (principalmente en móviles) */
+            overflow-y: auto;
+            overflow-x: hidden;
             color: white;
+            min-h-screen: 100vh;
         }
 
-        /* Fondo posicionado para mostrar la parte superior de la nueva imagen */
+        /* Fondo fijo para que no se mueva al hacer scroll en el contenido */
         .background-container {
             position: fixed;
             top: 0;
@@ -32,7 +35,7 @@
                 linear-gradient(to bottom, rgba(2, 6, 23, 0.45), rgba(2, 6, 23, 0.9)),
                 url('https://i.ibb.co/9kpPs8Sx/FONFO-LEADS2.webp');
             background-size: cover;
-            background-position: center 10%; /* Enfocado en la parte superior */
+            background-position: center 10%; 
             z-index: -1;
             transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
             transform: scale(1);
@@ -72,14 +75,14 @@
             transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        /* Pantalla de Bloqueo CENTRADA */
+        /* Pantalla de Bloqueo siempre centrada y fija */
         #login-overlay {
             position: fixed;
             inset: 0;
             z-index: 50;
             display: flex;
-            align-items: center; /* Centrado vertical */
-            justify-content: center; /* Centrado horizontal */
+            align-items: center; 
+            justify-content: center;
             background: rgba(2, 6, 23, 0.6);
             backdrop-filter: blur(30px);
             transition: opacity 1s ease, visibility 1s;
@@ -200,22 +203,22 @@
         </div>
     </div>
 
-    <!-- Contenido Principal - Desplazado hacia abajo -->
-    <main id="main-content" class="z-10 text-center w-full max-w-5xl px-6 hidden-system pt-[25vh]">
+    <!-- Contenido Principal - pt responsivo para evitar cortes en móvil -->
+    <main id="main-content" class="z-10 text-center w-full max-w-5xl px-6 hidden-system pt-12 pb-12 md:pt-[25vh]">
         <!-- Header -->
-        <header class="mb-20 stagger-1">
-            <h1 class="main-title text-4xl md:text-6xl font-extrabold mb-3 uppercase tracking-tight">
+        <header class="mb-14 md:mb-20 stagger-1">
+            <h1 class="main-title text-3xl md:text-6xl font-extrabold mb-3 uppercase tracking-tight">
                 SISTEMA DE GESTIÓN DE LEADS
             </h1>
             <div class="flex justify-center items-center gap-4">
-                <div class="h-[1px] w-12 bg-white/10"></div>
-                <span class="text-[10px] md:text-xs uppercase tracking-[0.6em] font-semibold text-white/40">Panel Administrativo</span>
-                <div class="h-[1px] w-12 bg-white/10"></div>
+                <div class="h-[1px] w-8 md:w-12 bg-white/10"></div>
+                <span class="text-[9px] md:text-xs uppercase tracking-[0.6em] font-semibold text-white/40">Panel Administrativo</span>
+                <div class="h-[1px] w-8 md:w-12 bg-white/10"></div>
             </div>
         </header>
 
         <!-- Botones -->
-        <div class="flex flex-col md:flex-row gap-12 justify-center items-center stagger-2">
+        <div class="flex flex-col md:flex-row gap-8 md:gap-12 justify-center items-center stagger-2">
             <!-- Botón 1 -->
             <button onclick="handleAction('redes')" class="liquid-glass btn-system btn-redes flex flex-col items-center justify-center group">
                 <div class="shine-effect"></div>
@@ -241,9 +244,9 @@
         </div>
 
         <!-- Footer -->
-        <footer class="mt-24 stagger-3">
+        <footer class="mt-16 md:mt-24 stagger-3">
             <div class="inline-block px-5 py-2.5 rounded-full border border-white/5 bg-white/5 backdrop-blur-md">
-                <p class="text-[9px] md:text-[11px] tracking-[0.5em] font-bold text-white/30 uppercase">
+                <p class="text-[8px] md:text-[11px] tracking-[0.5em] font-bold text-white/30 uppercase">
                     © 2025 BANCO FORTALEZA
                 </p>
             </div>
