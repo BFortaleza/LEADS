@@ -72,17 +72,18 @@
             transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        /* Pantalla de Bloqueo con mayor desenfoque */
+        /* Pantalla de Bloqueo con mayor desenfoque y posición ajustada */
         #login-overlay {
             position: fixed;
             inset: 0;
             z-index: 50;
             display: flex;
-            align-items: center;
+            align-items: flex-start; /* Ajustado para poder bajar el contenido */
             justify-content: center;
             background: rgba(2, 6, 23, 0.6);
             backdrop-filter: blur(30px);
             transition: opacity 1s ease, visibility 1s;
+            padding-top: 12vh; /* Baja la tarjeta de login */
         }
 
         .login-card {
@@ -170,7 +171,7 @@
         }
     </style>
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen">
+<body class="flex flex-col items-center justify-start min-h-screen pt-[12vh]"> <!-- pt-[12vh] baja el contenido principal -->
 
     <!-- Fondo de Pantalla -->
     <div class="background-container" id="bg"></div>
