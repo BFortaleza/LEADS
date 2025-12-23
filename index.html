@@ -22,20 +22,21 @@
             color: white;
         }
 
-        /* Fondo con Parallax suave */
+        /* Fondo ajustado para estar menos ampliado (más alejado) */
         .background-container {
             position: fixed;
-            top: -5%;
-            left: -5%;
-            width: 110%;
-            height: 110%;
+            top: -2%;
+            left: -2%;
+            width: 104%;
+            height: 104%;
             background-image: 
                 linear-gradient(to bottom, rgba(2, 6, 23, 0.3), rgba(2, 6, 23, 0.8)),
                 url('https://i.ibb.co/sdSZJxNM/FONFO-LEADS.webp');
             background-size: cover;
             background-position: center;
             z-index: -1;
-            transition: transform 0.2s ease-out;
+            transition: transform 0.3s ease-out; /* Suavizado ligeramente superior */
+            transform: scale(1.02); /* Escala reducida para evitar pixelado */
         }
 
         /* Estilo Liquid Glass */
@@ -215,12 +216,14 @@
             }, 3000);
         }
 
-        // Efecto Parallax interactivo mejorado
+        // Efecto Parallax interactivo optimizado para menos amplitud
         document.addEventListener('mousemove', (e) => {
-            const x = (window.innerWidth / 2 - e.clientX) / 40;
-            const y = (window.innerHeight / 2 - e.clientY) / 40;
+            // Factor de movimiento reducido de 40 a 60 para que sea más sutil
+            const x = (window.innerWidth / 2 - e.clientX) / 60;
+            const y = (window.innerHeight / 2 - e.clientY) / 60;
             const bg = document.getElementById('bg');
-            bg.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
+            // Escala de 1.02 para que la imagen respire mejor
+            bg.style.transform = `scale(1.02) translate(${x}px, ${y}px)`;
         });
     </script>
 </body>
