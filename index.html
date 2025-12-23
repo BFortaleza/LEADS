@@ -10,7 +10,7 @@
     <style>
         :root {
             --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
         body {
@@ -21,35 +21,35 @@
             color: white;
         }
 
-        /* Fondo ajustado: Escala 1 para que se vea lo más alejado posible */
+        /* Fondo ajustado: Posición 'top' para ver la parte superior y escala 1 */
         .background-container {
             position: fixed;
-            top: -1%;
-            left: -1%;
-            width: 102%;
-            height: 102%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-image: 
-                linear-gradient(to bottom, rgba(2, 6, 23, 0.4), rgba(2, 6, 23, 0.85)),
+                linear-gradient(to bottom, rgba(2, 6, 23, 0.5), rgba(2, 6, 23, 0.9)),
                 url('https://i.ibb.co/sdSZJxNM/FONFO-LEADS.webp');
             background-size: cover;
-            background-position: center;
+            background-position: center top; /* Muestra más la parte superior */
             z-index: -1;
-            transition: transform 0.4s ease-out;
-            transform: scale(1); /* Zoom mínimo para máxima nitidez */
+            transition: transform 0.5s ease-out;
+            transform: scale(1);
         }
 
-        /* Estilo Liquid Glass - Tamaño más compacto */
+        /* Liquid Glass - Tamaño más pequeño y minimalista */
         .liquid-glass {
             background: var(--glass-bg);
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
             border: 1px solid var(--glass-border);
-            border-radius: 2rem;
+            border-radius: 1.75rem;
             position: relative;
             overflow: hidden;
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            width: 280px;  /* Reducido de 320px */
-            height: 190px; /* Reducido de 240px */
+            width: 240px;  /* Reducido significativamente */
+            height: 160px; /* Reducido significativamente */
         }
 
         .liquid-glass::before {
@@ -59,16 +59,16 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
             transform: rotate(30deg);
             transition: all 0.8s ease;
             pointer-events: none;
         }
 
         .liquid-glass:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+            transform: translateY(-6px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.5);
         }
 
         .icon-container {
@@ -76,21 +76,19 @@
             color: white; 
         }
 
-        /* Botón Redes Sociales: Verde al hover */
         .btn-redes:hover .icon-container {
             color: #4ade80; 
             transform: scale(1.1);
         }
 
-        /* Botón Campañas: Azul al hover */
         .btn-campanas:hover .icon-container {
             color: #60a5fa; 
             transform: scale(1.1);
         }
 
-        /* Título más pequeño y estilizado */
+        /* Título más pequeño */
         .main-title {
-            background: linear-gradient(to right, #ffffff, #cbd5e1);
+            background: linear-gradient(to right, #ffffff, #94a3b8);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -102,7 +100,7 @@
         .stagger-3 { animation: slideUp 0.8s ease-out 0.4s forwards; opacity: 0; }
 
         @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
+            from { transform: translateY(15px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
 
@@ -112,7 +110,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.05), transparent);
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.03), transparent);
             transition: all 0.6s;
         }
 
@@ -123,63 +121,63 @@
 </head>
 <body class="flex flex-col items-center justify-center min-h-screen">
 
-    <!-- Fondo Dinámico -->
+    <!-- Fondo -->
     <div class="background-container" id="bg"></div>
 
     <!-- Contenido Principal -->
     <main class="z-10 text-center w-full max-w-4xl px-6">
         
-        <!-- Header ajustado en escala -->
-        <header class="mb-12 stagger-1">
-            <h1 class="main-title text-3xl md:text-5xl font-extrabold mb-3 uppercase tracking-tight">
-                Sistema de Gestión <span class="block text-xl md:text-2xl font-light tracking-[0.25em] mt-1 opacity-80">de Leads</span>
+        <!-- Header reducido -->
+        <header class="mb-10 stagger-1">
+            <h1 class="main-title text-2xl md:text-4xl font-extrabold mb-2 uppercase tracking-tight">
+                Sistema de Gestión <span class="block text-lg md:text-xl font-light tracking-[0.3em] mt-1 opacity-70">de Leads</span>
             </h1>
-            <div class="flex justify-center items-center gap-3">
-                <div class="h-[1px] w-8 bg-gradient-to-r from-transparent to-white/30"></div>
-                <span class="text-[10px] uppercase tracking-[0.4em] font-semibold text-white/40">Panel Administrativo</span>
-                <div class="h-[1px] w-8 bg-gradient-to-l from-transparent to-white/30"></div>
+            <div class="flex justify-center items-center gap-2">
+                <div class="h-[1px] w-6 bg-gradient-to-r from-transparent to-white/20"></div>
+                <span class="text-[9px] uppercase tracking-[0.5em] font-semibold text-white/30">Panel Administrativo</span>
+                <div class="h-[1px] w-6 bg-gradient-to-l from-transparent to-white/20"></div>
             </div>
         </header>
 
-        <!-- Botones más pequeños -->
-        <div class="flex flex-col md:flex-row gap-8 justify-center items-center stagger-2">
+        <!-- Botones Reducidos -->
+        <div class="flex flex-col md:flex-row gap-6 justify-center items-center stagger-2">
             
             <!-- Botón 1 -->
             <button onclick="handleAction('redes')" class="liquid-glass btn-redes flex flex-col items-center justify-center group">
                 <div class="shine"></div>
-                <div class="icon-container mb-4 p-4 rounded-full bg-white/5 border border-white/5 group-hover:bg-green-500/5 transition-all duration-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div class="icon-container mb-3 p-3.5 rounded-full bg-white/5 border border-white/5 group-hover:bg-green-500/5 transition-all duration-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                 </div>
-                <span class="text-base font-bold tracking-widest uppercase transition-all">Redes Sociales</span>
+                <span class="text-sm font-bold tracking-widest uppercase transition-all">Redes Sociales</span>
             </button>
 
             <!-- Botón 2 -->
             <button onclick="handleAction('campanas')" class="liquid-glass btn-campanas flex flex-col items-center justify-center group">
                 <div class="shine"></div>
-                <div class="icon-container mb-4 p-4 rounded-full bg-white/5 border border-white/5 group-hover:bg-blue-500/5 transition-all duration-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div class="icon-container mb-3 p-3.5 rounded-full bg-white/5 border border-white/5 group-hover:bg-blue-500/5 transition-all duration-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
                     </svg>
                 </div>
-                <span class="text-base font-bold tracking-widest uppercase transition-all">Campañas Permanentes</span>
+                <span class="text-sm font-bold tracking-widest uppercase transition-all text-center px-4">Campañas Permanentes</span>
             </button>
 
         </div>
 
         <!-- Footer -->
-        <footer class="mt-20 stagger-3">
-            <div class="inline-block px-5 py-1.5 rounded-full border border-white/5 bg-white/5 backdrop-blur-sm">
-                <p class="text-[9px] tracking-[0.3em] font-bold text-white/30 uppercase">
+        <footer class="mt-16 stagger-3">
+            <div class="inline-block px-4 py-1.5 rounded-full border border-white/5 bg-white/5">
+                <p class="text-[8px] tracking-[0.3em] font-bold text-white/20 uppercase">
                     © 2025 BANCO FORTALEZA
                 </p>
             </div>
         </footer>
     </main>
 
-    <div id="toast" class="fixed top-8 right-8 bg-white/95 text-black px-5 py-3 rounded-xl font-bold shadow-2xl opacity-0 pointer-events-none transition-all duration-500 transform translate-x-5 text-sm"></div>
+    <div id="toast" class="fixed top-6 right-6 bg-white/95 text-black px-4 py-2 rounded-lg font-bold shadow-2xl opacity-0 pointer-events-none transition-all duration-500 transform translate-x-5 text-xs"></div>
 
     <script>
         function handleAction(type) {
@@ -194,10 +192,9 @@
         }
 
         document.addEventListener('mousemove', (e) => {
-            const x = (window.innerWidth / 2 - e.clientX) / 80;
-            const y = (window.innerHeight / 2 - e.clientY) / 80;
+            const x = (window.innerWidth / 2 - e.clientX) / 100;
+            const y = (window.innerHeight / 2 - e.clientY) / 100;
             const bg = document.getElementById('bg');
-            // Escala 1 para que la imagen se vea alejada y nítida
             bg.style.transform = `scale(1) translate(${x}px, ${y}px)`;
         });
     </script>
