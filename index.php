@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISTEMA DE GESTIÓN DE LEADS | BANCO FORTALEZA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-shine: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            background-color: #020617;
+            overflow: hidden;
+            color: white;
+        }
+
+        /* Fondo con Parallax suave */
+        .background-container {
+            position: fixed;
+            top: -5%;
+            left: -5%;
+            width: 110%;
+            height: 110%;
+            background-image: 
+                linear-gradient(to bottom, rgba(2, 6, 23, 0.3), rgba(2, 6, 23, 0.8)),
+                url('https://i.ibb.co/sdSZJxNM/FONFO-LEADS.webp');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            transition: transform 0.2s ease-out;
+        }
+
+        /* Estilo Liquid Glass */
+        .liquid-glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            width: 320px;
+            height: 240px;
+        }
+
+        /* Brillo interno "Liquid" */
+        .liquid-glass::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+            transition: all 0.8s ease;
+            pointer-events: none;
+        }
+
+        .liquid-glass:hover::before {
+            left: -10%;
+            top: -10%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
+        }
+
+        .liquid-glass:hover {
+            transform: translateY(-12px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Lógica de colores de iconos */
+        .icon-container {
+            transition: all 0.4s ease;
+            color: white; /* Blanco por defecto */
+        }
+
+        /* Botón Redes Sociales: Verde al hover */
+        .btn-redes:hover .icon-container {
+            color: #4ade80; /* tailwind green-400 */
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        /* Botón Campañas: Azul al hover */
+        .btn-campanas:hover .icon-container {
+            color: #60a5fa; /* tailwind blue-400 */
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Título con gradiente y efecto de profundidad */
+        .main-title {
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        /* Animación de entrada escalonada */
+        .stagger-1 { animation: slideUp 0.8s ease-out forwards; opacity: 0; }
+        .stagger-2 { animation: slideUp 0.8s ease-out 0.2s forwards; opacity: 0; }
+        .stagger-3 { animation: slideUp 0.8s ease-out 0.4s forwards; opacity: 0; }
+
+        @keyframes slideUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Reflejo "Shine" que cruza el botón */
+        .shine {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: all 0.6s;
+        }
+
+        .liquid-glass:hover .shine {
+            left: 100%;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen">
+
+    <!-- Fondo Dinámico -->
+    <div class="background-container" id="bg"></div>
+
+    <!-- Contenido Principal -->
+    <main class="z-10 text-center w-full max-w-5xl px-6">
+        
+        <!-- Header con estética mejorada -->
+        <header class="mb-16 stagger-1">
+            <h1 class="main-title text-5xl md:text-7xl font-extrabold mb-4 uppercase">
+                Sistema de Gestión <span class="block text-3xl md:text-4xl font-light tracking-[0.2em] mt-2 opacity-90">de Leads</span>
+            </h1>
+            <div class="flex justify-center items-center gap-4">
+                <div class="h-[1px] w-12 bg-gradient-to-r from-transparent to-white/40"></div>
+                <span class="text-xs uppercase tracking-[0.5em] font-semibold text-white/50">Panel Administrativo</span>
+                <div class="h-[1px] w-12 bg-gradient-to-l from-transparent to-white/40"></div>
+            </div>
+        </header>
+
+        <!-- Disposición de Botones -->
+        <div class="flex flex-col md:flex-row gap-10 justify-center items-center stagger-2">
+            
+            <!-- Botón 1: Redes Sociales -->
+            <button onclick="handleAction('redes')" class="liquid-glass btn-redes flex flex-col items-center justify-center group">
+                <div class="shine"></div>
+                <div class="icon-container mb-6 p-5 rounded-full bg-white/5 border border-white/10 group-hover:bg-green-500/10 transition-all duration-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <span class="text-xl font-bold tracking-widest uppercase group-hover:tracking-[0.15em] transition-all">Redes Sociales</span>
+                <div class="mt-2 w-0 h-0.5 bg-green-400 group-hover:w-1/2 transition-all duration-500 opacity-50"></div>
+            </button>
+
+            <!-- Botón 2: Campañas Permanentes -->
+            <button onclick="handleAction('campanas')" class="liquid-glass btn-campanas flex flex-col items-center justify-center group">
+                <div class="shine"></div>
+                <div class="icon-container mb-6 p-5 rounded-full bg-white/5 border border-white/10 group-hover:bg-blue-500/10 transition-all duration-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                    </svg>
+                </div>
+                <span class="text-xl font-bold tracking-widest uppercase group-hover:tracking-[0.15em] transition-all">Campañas Permanentes</span>
+                <div class="mt-2 w-0 h-0.5 bg-blue-400 group-hover:w-1/2 transition-all duration-500 opacity-50"></div>
+            </button>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-24 stagger-3">
+            <div class="inline-block px-6 py-2 rounded-full border border-white/5 bg-white/5 backdrop-blur-md">
+                <p class="text-[10px] tracking-[0.4em] font-bold text-white/40 uppercase">
+                    © 2025 BANCO FORTALEZA
+                </p>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Feedback UI -->
+    <div id="toast" class="fixed top-10 right-10 bg-white text-black px-6 py-4 rounded-2xl font-bold shadow-2xl opacity-0 pointer-events-none transition-all duration-700 transform translate-x-10">
+        <!-- Contenido dinámico -->
+    </div>
+
+    <script>
+        function handleAction(type) {
+            const toast = document.getElementById('toast');
+            toast.innerHTML = `
+                <div class="flex items-center gap-4">
+                    <div class="h-2 w-2 rounded-full animate-ping ${type === 'redes' ? 'bg-green-500' : 'bg-blue-500'}"></div>
+                    <span>Accediendo a ${type === 'redes' ? 'Redes Sociales' : 'Campañas'}...</span>
+                </div>
+            `;
+            
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateX(0)';
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(20px)';
+            }, 3000);
+        }
+
+        // Efecto Parallax interactivo mejorado
+        document.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth / 2 - e.clientX) / 40;
+            const y = (window.innerHeight / 2 - e.clientY) / 40;
+            const bg = document.getElementById('bg');
+            bg.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
+        });
+    </script>
+</body>
+</html>
