@@ -253,42 +253,18 @@
     <div id="toast" class="fixed top-10 right-10 bg-white/95 text-black px-8 py-4 rounded-2xl font-bold shadow-2xl opacity-0 pointer-events-none transition-all duration-700 transform translate-x-10 text-sm"></div>
 
     <script>
-        // Hash verificado para "FOR25"
-        const HASHED_PIN = "a7719639538a74b1e56b46797a7d46869476718d03c6257e1f409581895a987c";
+        // Ofuscación simple para "FOR25" (Rk9SMjU=)
+        const EXPECTED_ACCESS = "Rk9SMjU=";
 
-        /**
-         * Función de encriptación mejorada con soporte para entornos no seguros
-         */
-        async function hashString(str) {
-            try {
-                // Si estamos en un entorno seguro (HTTPS), usamos la API nativa de criptografía
-                if (window.crypto && window.crypto.subtle) {
-                    const msgBuffer = new TextEncoder().encode(str);
-                    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-                    const hashArray = Array.from(new Uint8Array(hashBuffer));
-                    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-                } else {
-                    // Fallback para entornos locales o no seguros
-                    // Se utiliza una implementación simplificada para permitir el acceso durante el testeo
-                    return "fallback-mode";
-                }
-            } catch (e) {
-                console.error("Error encriptando la clave.");
-                return "";
-            }
-        }
-
-        async function checkPassword() {
+        function checkPassword() {
             const inputRaw = document.getElementById('pass-input').value;
             const input = inputRaw.trim().toUpperCase(); 
             const errorMsg = document.getElementById('login-error');
             const overlay = document.getElementById('login-overlay');
             const mainContent = document.getElementById('main-content');
             
-            const hashed = await hashString(input);
-
-            // Verificación exitosa si el hash coincide o si estamos en modo fallback y la clave es correcta
-            if (hashed === HASHED_PIN || (hashed === "fallback-mode" && input === "FOR25")) {
+            // Verificación usando Base64 para evitar problemas con APIs de encriptación asíncronas
+            if (btoa(input) === EXPECTED_ACCESS) {
                 overlay.style.opacity = '0';
                 setTimeout(() => {
                     overlay.style.visibility = 'hidden';
