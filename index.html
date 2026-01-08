@@ -108,6 +108,11 @@
             border-color: white;
             transform: scale(1.15);
         }
+        /* Puntos más pequeños para la segunda contraseña larga */
+        .pin-dot-sm {
+            width: 6px;
+            height: 6px;
+        }
 
         .hidden-content { display: none !important; }
         #system-loader { display: none; }
@@ -117,6 +122,10 @@
             50% { filter: drop-shadow(0 0 20px rgba(255,255,255,0.15)); }
         }
         .logo-glow { animation: pulse-logo 3s infinite; }
+
+        .camp-input {
+            letter-spacing: 0.2em; /* Ajustado para verse similar al principal */
+        }
     </style>
 </head>
 <body class="flex flex-col items-center justify-center h-screen">
@@ -124,7 +133,7 @@
     <div class="bg-portal"></div>
     <div class="bg-image" id="bg-image"></div>
 
-    <!-- PANTALLA DE ACCESO -->
+    <!-- PANTALLA DE ACCESO (PRINCIPAL) -->
     <div id="auth-screen" class="z-50 w-full max-w-sm px-6 transition-all duration-700">
         <div class="glass-panel rounded-[2rem] p-8 text-center relative overflow-hidden">
             <div class="mb-6">
@@ -152,6 +161,40 @@
         </div>
     </div>
 
+    <!-- MODAL DE SEGURIDAD CAMPAÑAS (ACTUALIZADO: CAM26) -->
+    <div id="campaign-modal" class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm hidden-content transition-all duration-300">
+        <div class="glass-panel rounded-[2rem] p-8 w-full max-w-sm text-center mx-4 relative overflow-hidden">
+            
+            <div class="mb-6">
+                <div class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-4 logo-glow">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                </div>
+                <h3 class="text-base font-bold uppercase tracking-[0.2em] opacity-90">Acceso Restringido</h3>
+                <p class="text-[8px] text-white/30 mt-2 uppercase tracking-[0.4em] font-bold">Clave de Campañas</p>
+            </div>
+            
+            <!-- Dots Container ajustado para 5 caracteres (CAM26) -->
+            <div class="flex justify-center gap-3 mb-6" id="camp-dots-container">
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+                <div class="pin-dot"></div>
+            </div>
+            
+            <div class="relative max-w-[240px] mx-auto mb-6">
+                <input type="password" id="camp-pass" class="auth-input camp-input" maxlength="5" placeholder="•••••">
+            </div>
+            
+            <div class="flex gap-3">
+                <button onclick="closeCampaignAuth()" class="flex-1 py-3 bg-white/5 hover:bg-white/10 rounded-xl text-[8px] font-black uppercase tracking-[0.2em] border border-white/5 transition-all">Cancelar</button>
+                <button onclick="verifyCampaignAuth()" class="flex-1 py-3 bg-white/10 hover:bg-white/20 rounded-xl text-[8px] font-black uppercase tracking-[0.2em] border border-white/10 transition-all shadow-[0_0_15px_rgba(255,255,255,0.05)]">Acceder</button>
+            </div>
+        </div>
+    </div>
+
     <!-- LOADER -->
     <div id="system-loader" class="z-50 flex flex-col items-center">
         <div class="w-12 h-12 border-2 border-white/5 border-t-white rounded-full animate-spin mb-4"></div>
@@ -160,11 +203,11 @@
 
     <!-- DASHBOARD PRINCIPAL -->
     <main id="dashboard" class="z-10 w-full h-screen flex flex-col hidden-content">
-        <!-- Barra de Navegación (Máxima Transparencia) -->
-        <nav class="w-full px-8 py-3 flex justify-between items-center border-b border-white/5 bg-white/[0.02] backdrop-blur-md sticky top-0 z-40">
+        <!-- Barra de Navegación -->
+        <nav class="w-full px-8 py-6 flex justify-between items-center border-b border-white/5 bg-white/[0.02] backdrop-blur-md sticky top-0 z-40 transition-all">
             <div class="flex items-center gap-6">
-                <img src="https://i.ibb.co/8yB0N1b/logo-blanco.png" alt="Logo" class="h-6">
-                <div class="h-4 w-[1px] bg-white/10 hidden sm:block"></div>
+                <img src="https://i.ibb.co/8yB0N1b/logo-blanco.png" alt="Logo" class="h-7 sm:h-8 transition-all"> 
+                <div class="h-6 w-[1px] bg-white/10 hidden sm:block"></div>
                 <div class="hidden sm:block">
                     <p id="real-time-clock" class="text-[10px] font-bold tracking-widest text-white/60">00:00:00</p>
                     <p id="real-time-date" class="text-[7px] text-white/20 uppercase tracking-[0.2em]">Cargando...</p>
@@ -186,7 +229,7 @@
             </div>
         </nav>
 
-        <!-- Contenido Central (Ajustado para 16:9 sin scroll) -->
+        <!-- Contenido Central -->
         <div class="flex-1 flex flex-col items-center justify-center px-6 py-4 overflow-hidden">
             <header class="text-center mb-10">
                 <h1 class="main-title text-4xl md:text-5xl lg:text-6xl font-extrabold mb-3 uppercase tracking-tighter">
@@ -199,7 +242,7 @@
                 </div>
             </header>
 
-            <!-- Grid de Módulos (Más compactos) -->
+            <!-- Grid de Módulos -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl px-4">
                 <button onclick="openLink('redes')" class="action-card glass-panel p-8 rounded-[1.5rem] flex flex-col items-center group">
                     <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center mb-6 group-hover:bg-green-500/10 group-hover:border-green-500/30 transition-all duration-300">
@@ -211,7 +254,7 @@
                     <p class="text-[8px] text-white/20 mt-2 uppercase tracking-[0.3em] font-bold">Base de Datos Centralizada</p>
                 </button>
 
-                <button onclick="openLink('campanas')" class="action-card glass-panel p-8 rounded-[1.5rem] flex flex-col items-center group">
+                <button onclick="initCampaignAuth()" class="action-card glass-panel p-8 rounded-[1.5rem] flex flex-col items-center group">
                     <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center mb-6 group-hover:bg-blue-500/10 group-hover:border-blue-500/30 transition-all duration-500">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white group-hover:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
@@ -224,7 +267,7 @@
             </div>
         </div>
 
-        <!-- Footer solicitado -->
+        <!-- Footer -->
         <footer class="py-6 text-center">
             <div class="flex flex-col items-center gap-1 opacity-40">
                 <p class="text-[10px] tracking-[0.5em] font-bold uppercase text-white/80">
@@ -250,7 +293,8 @@
 
     <script>
         const pinInput = document.getElementById('pin-input');
-        const CORRECT_HASH = "FOR25";
+        const CORRECT_HASH = "FOR26"; 
+        const CAMPAIGN_HASH = "CAM26"; // Actualizado a CAM26
 
         window.onload = () => {
             if (sessionStorage.getItem('fortaleza_session') === 'active') {
@@ -274,8 +318,9 @@
             });
         }
 
+        /* --- LOGIN PRINCIPAL --- */
         pinInput.addEventListener('input', (e) => {
-            const dots = document.querySelectorAll('.pin-dot');
+            const dots = document.querySelectorAll('#auth-screen .pin-dot');
             dots.forEach((dot, i) => {
                 if (i < e.target.value.length) dot.classList.add('active');
                 else dot.classList.remove('active');
@@ -293,15 +338,84 @@
             if (val === CORRECT_HASH) {
                 showDashboard(true);
             } else {
-                error.style.opacity = '1';
-                pinInput.value = "";
-                document.querySelectorAll('.pin-dot').forEach(d => d.classList.remove('active'));
-                const card = document.querySelector('#auth-screen .glass-panel');
-                card.style.transform = 'translateX(8px)';
-                setTimeout(() => card.style.transform = 'translateX(-8px)', 80);
-                setTimeout(() => card.style.transform = 'translateX(0)', 160);
-                setTimeout(() => error.style.opacity = '0', 2000);
+                triggerErrorAnim(error, pinInput, '#auth-screen .glass-panel');
             }
+        }
+
+        /* --- SEGURIDAD CAMPAÑAS --- */
+        function initCampaignAuth() {
+            const modal = document.getElementById('campaign-modal');
+            const input = document.getElementById('camp-pass');
+            
+            modal.classList.remove('hidden-content');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+            input.value = '';
+            
+            // Resetear puntos de campaña
+            document.querySelectorAll('#camp-dots-container .pin-dot').forEach(d => d.classList.remove('active'));
+            
+            input.focus();
+        }
+
+        // Listener para los puntos del modal de campaña
+        document.getElementById('camp-pass').addEventListener('input', (e) => {
+            const dots = document.querySelectorAll('#camp-dots-container .pin-dot');
+            dots.forEach((dot, i) => {
+                if (i < e.target.value.length) dot.classList.add('active');
+                else dot.classList.remove('active');
+            });
+        });
+
+        function closeCampaignAuth() {
+            const modal = document.getElementById('campaign-modal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => modal.classList.add('hidden-content'), 300);
+        }
+
+        function verifyCampaignAuth() {
+            const input = document.getElementById('camp-pass');
+            
+            if (input.value === CAMPAIGN_HASH) {
+                closeCampaignAuth();
+                openLink('campanas');
+            } else {
+                // Animación de error
+                input.style.borderColor = '#ef4444';
+                input.classList.add('animate-pulse');
+                
+                // Efecto de sacudida
+                const panel = input.closest('.glass-panel');
+                panel.style.transform = 'translateX(8px)';
+                setTimeout(() => panel.style.transform = 'translateX(-8px)', 80);
+                setTimeout(() => panel.style.transform = 'translateX(0)', 160);
+
+                // Reset
+                input.value = '';
+                document.querySelectorAll('#camp-dots-container .pin-dot').forEach(d => d.classList.remove('active'));
+
+                showToast('Error de Seguridad', 'Contraseña Inválida', '#ef4444');
+                
+                setTimeout(() => {
+                    input.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                    input.classList.remove('animate-pulse');
+                }, 1500);
+            }
+        }
+        
+        document.getElementById('camp-pass').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') verifyCampaignAuth();
+        });
+
+        /* --- UTILIDADES --- */
+        function triggerErrorAnim(errorEl, inputEl, cardSelector) {
+            errorEl.style.opacity = '1';
+            inputEl.value = "";
+            document.querySelectorAll('#auth-screen .pin-dot').forEach(d => d.classList.remove('active'));
+            const card = document.querySelector(cardSelector);
+            card.style.transform = 'translateX(8px)';
+            setTimeout(() => card.style.transform = 'translateX(-8px)', 80);
+            setTimeout(() => card.style.transform = 'translateX(0)', 160);
+            setTimeout(() => errorEl.style.opacity = '0', 2000);
         }
 
         function showDashboard(animated) {
