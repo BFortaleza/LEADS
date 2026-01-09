@@ -242,8 +242,9 @@
                 </div>
             </header>
 
-            <!-- Grid de Módulos -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl px-4">
+            <!-- Grid de Módulos (Actualizado a 3 columnas) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl px-4">
+                <!-- Botón 1: Redes Sociales -->
                 <button onclick="openLink('redes')" class="action-card glass-panel p-8 rounded-[1.5rem] flex flex-col items-center group">
                     <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center mb-6 group-hover:bg-green-500/10 group-hover:border-green-500/30 transition-all duration-300">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white group-hover:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -254,6 +255,7 @@
                     <p class="text-[8px] text-white/20 mt-2 uppercase tracking-[0.3em] font-bold">Base de Datos Centralizada</p>
                 </button>
 
+                <!-- Botón 2: Campañas -->
                 <button onclick="initCampaignAuth()" class="action-card glass-panel p-8 rounded-[1.5rem] flex flex-col items-center group">
                     <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center mb-6 group-hover:bg-blue-500/10 group-hover:border-blue-500/30 transition-all duration-500">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white group-hover:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -263,6 +265,17 @@
                     </div>
                     <h3 class="text-base font-bold tracking-[0.1em] uppercase">Leads Campañas</h3>
                     <p class="text-[8px] text-white/20 mt-2 uppercase tracking-[0.3em] font-bold">Análisis de Resultados</p>
+                </button>
+
+                <!-- Botón 3: Derivaciones (NUEVO - Color Lila) -->
+                <button onclick="openLink('derivaciones')" class="action-card glass-panel p-8 rounded-[1.5rem] flex flex-col items-center group">
+                    <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center mb-6 group-hover:bg-purple-500/10 group-hover:border-purple-500/30 transition-all duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white group-hover:text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                        </svg>
+                    </div>
+                    <h3 class="text-base font-bold tracking-[0.1em] uppercase">Derivaciones</h3>
+                    <p class="text-[8px] text-white/20 mt-2 uppercase tracking-[0.3em] font-bold">Gestión de Traspasos</p>
                 </button>
             </div>
         </div>
@@ -450,14 +463,28 @@
         }
 
         function openLink(type) {
-            let url = type === 'redes' 
-                ? "https://docs.google.com/spreadsheets/d/1j8gG1L5aQ5KvkskaTwJX9doUlAr6zijmiMhpfSdiHVY/edit?usp=sharing"
-                : "https://docs.google.com/spreadsheets/d/1pfP6jF3DK0BXrXX0N4-BwzOCNtdtHeAZTTeoIGfIqsk/edit?usp=sharing";
+            let url = "";
+            let title = "";
+            let color = "";
+
+            if (type === 'redes') {
+                url = "https://docs.google.com/spreadsheets/d/1j8gG1L5aQ5KvkskaTwJX9doUlAr6zijmiMhpfSdiHVY/edit?usp=sharing";
+                title = "Acceso Redes";
+                color = "#4ade80"; // Green
+            } else if (type === 'campanas') {
+                url = "https://docs.google.com/spreadsheets/d/1pfP6jF3DK0BXrXX0N4-BwzOCNtdtHeAZTTeoIGfIqsk/edit?usp=sharing";
+                title = "Acceso Campañas";
+                color = "#3b82f6"; // Blue
+            } else if (type === 'derivaciones') {
+                url = "https://docs.google.com/spreadsheets/d/1gpavoMcF3D2oFzRz-kGW0cvGiRYbMBOEawkjcuLjeEk/edit?usp=sharing";
+                title = "Acceso Derivaciones";
+                color = "#a855f7"; // Purple/Lila
+            }
             
             showToast(
-                type === 'redes' ? 'Acceso Redes' : 'Acceso Campañas',
+                title,
                 'Estableciendo enlace...',
-                type === 'redes' ? '#4ade80' : '#3b82f6'
+                color
             );
 
             setTimeout(() => {
